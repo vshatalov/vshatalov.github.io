@@ -18,6 +18,7 @@ if (isset($_POST['submit'])) {
     if (mail($to, $subject, $body, $headers)) {
         echo "Mail Sent!";
     } else {
+        echo "Failed To Send Mail";
     }
 }
 ?>
