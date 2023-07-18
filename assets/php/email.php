@@ -6,14 +6,14 @@ if (isset($_POST['submit'])) {
 
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $phone = $_POST['phone'];
+    // $phone = $_POST['phone'];
     $subject = "Contact Form";
     $body = $_POST['message'];
     $headers = 'From: ' . $email . "\r\n";
 
 
     $body = "name : " . $name . "\r\n" .
-        "Phone : " . $phone . "\r\n" .
+        // "Phone : " . $phone . "\r\n" .
         "Message : " . $body;
     if (mail($to, $subject, $body, $headers)) {
         echo "Mail Sent!";
