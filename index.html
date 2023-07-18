@@ -149,7 +149,7 @@
 			<p>Feel free to contact me via the form below. I will answer as soon as I can.</p>
 			<div class="row">
 				<div class="col-8 col-12-small">
-					<form method="post" action="email.php">
+					<form method="post" action="mailto:vladishat@gmail.com">
 						<div class="row gtr-uniform gtr-50">
 							<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name"
 									placeholder="Name" /></div>
@@ -163,33 +163,6 @@
 						<li><input type="submit" value="Send Message" /></li>
 					</ul>
 				</div>
-
-				<?php
-				if (isset($_POST['submit'])) {
-					$to = "YOUR_EMAIL_ADDRESS_HERE";
-				
-				
-				
-					$name = $_POST['name'];
-					$email = $_POST['email'];
-					// $phone = $_POST['phone'];
-					$subject = "Contact Form";
-					$body = $_POST['message'];
-					$headers = 'From: ' . $email . "\r\n";
-				
-				
-					$body = "name : " . $name . "\r\n" .
-						// "Phone : " . $phone . "\r\n" .
-						"Message : " . $body;
-					if (mail($to, $subject, $body, $headers)) {
-						echo "Mail Sent!";
-					} else {
-						echo "Failed To Send Mail";
-					}
-				}
-				?>
-
-
 
 				<div class="col-4 col-12-small">
 					<ul class="labeled-icons">
