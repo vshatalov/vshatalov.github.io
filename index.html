@@ -333,7 +333,19 @@
 			<p>Feel free to contact me anytime. I will answer as soon as I can.</p>
 			<div class="row">
 				<div class="col-8 col-12-small">
-					<form method="post" action="mailto:vladishat@gmail.com" enctype="text/plain">
+
+					<!-- Sample HTML Form -->
+					<form action="mailto:vladishat@gmail.com" method="POST" enctype="multipart/form-data" name="EmailForm">
+						Name:<br>
+						<input type="text" size="19" name="Contact-Name"><br><br>
+						Email:<br>
+						<input type="email" name="Contact-Email"><br><br>
+						Message:<br>
+						<textarea name="Contact-Message" rows="6" cols="20"></textarea><br><br>
+						<button type="submit" value="Submit">Send</button>
+					</form>
+
+					<!-- <form method="post" action="mailto:vladishat@gmail.com" enctype="text/plain">
 						<div class="row gtr-uniform gtr-50">
 							<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name"
 									placeholder="Name" /></div>
@@ -342,7 +354,7 @@
 							<div class="col-12"><textarea name="message" id="message" placeholder="Message"
 									rows="4"></textarea></div>
 						</div>
-					</form>
+					</form> -->
 					<ul class="actions">
 						<li><input type="submit" value="Send Message" /></li>
 					</ul>
