@@ -99,7 +99,8 @@
 							alt="Space tracks of a satellite orbit (red at apogee and yellow at perigee) intersecting the visibility cones (blue) of two ground stations (white)." /></a>
 					<h3><a href="https://colab.research.google.com/drive/1J8gMnd57wCnWcwWfQXuKRbemtyBAKIl6?usp=sharing"
 							target="_blank">Satellite View Period Ratio for Circular and Elliptical Orbits</a></h3>
-					<p>The program calculates the view period ratio for a satellite and ground station pair as the
+					<p>This Jupiter Notebook calculates the view period ratio for a satellite and ground station pair as
+						the
 						asymptotic fraction of time the satellite is able to communicate with its ground station
 						according to <a href="https://arxiv.org/abs/2102.03459" target="_blank">Dr. Lo's theory</a>. In
 						particularly, the code solves the article equations 12 and 14 for circular and elliptical orbits
@@ -107,33 +108,13 @@
 						Eccentricity, and Field Of View and Station Latitude and Elevation. In the result, it provides
 						the satellite View Period Ratio</p>
 				</article>
-
-				<article class="col-6 col-12-xsmall work-item" id="a18">
-					<a href="images/fulls/18.png" class="image fit thumb"><img src="images/thumbs/18.png"
-							alt="Cryptocurrency Trading History Analyzer" /></a>
-					<h3><a href="#" target="_blank">Cryptocurrency Trading History Analyzer</a></h3>
-					<p>This code sets connection to <a href="https://www.binance.com/en" target="_blank">
-							Binance-exchange API</a> and retrieves a list of historical trades for a given set of
-						symbols.
-						The parameters passed to the function are the symbol, the maximum number of trades to
-						be retrieved and the ID of the trade from which to start retrieving. The function reads the high
-						frequency trade history hour by hour and combines the rows into one dataframe for further
-						statistical analysis.
-					</p>
-					<p>
-						As it is shown on the picture, the program analysis the price and cash flow oscillations, and
-						Bids
-						and Asks distributions around the dynamically changing midprice. Then, it finds the optimal
-						values of the next Bid and Ask which would optimize P&L.
-					</p>
-				</article>
-
 				<article class="col-6 col-12-xsmall work-item" id="a15">
 					<a href="images/fulls/15.png" class="image fit thumb"><img src="images/thumbs/15.png"
 							alt="Lifetime Wellbeing Calculator" /></a>
 					<h3><a href="https://colab.research.google.com/drive/1eME5-qnySUVgzyCtIUa2FRRjH4VcUIHY?usp=sharing"
 							target="_blank">Lifetime Wellbeing Calculator</a></h3>
-					<p>This program simulates lifetime financial well-being of a typical household. The simulation moves
+					<p>This Jupiter Notebook simulates lifetime financial well-being of a typical household. The
+						simulation moves
 						forward by years from the age of 67 to the year of the investor's death, summing up financial
 						wellbeing over the years of life (Mortality and Life Expectancy data were taken from <a
 							href="https://aga.gov.au/publications/life-tables/australian-life-tables-2015-17"
@@ -141,6 +122,19 @@
 						inflation and living/dying, evolve each year. The well-being in any particular year is a concave
 						function of the income in that year plus the bequest if the investor dies in that year.</p>
 				</article>
+
+				<article class="col-6 col-12-xsmall work-item" id="a18">
+					<a href="images/fulls/18.png" class="image fit thumb"><img src="images/thumbs/18.png"
+							alt="Cryptocurrency Trading History Analyzer" /></a>
+					<h3><a href="#" target="_blank">Anatomy of Cryptocurrency Market</a></h3>
+					<p>
+						This is Jupiter Notebook tool that allows users to look inside the process of a market price
+						formation. It
+						fetches data via [Binance](https://www.binance.com/en) API, decrypts and visualizes trades
+						history in intelligible way, that demonstrates clearly moving factors of price oscillations.
+					</p>
+				</article>
+
 				<!-- AI-powered chatbot for our e-commerce site with OpenAI -->
 				<article class="col-6 col-12-xsmall work-item" id="a16">
 					<a href="images/fulls/16.png" class="image fit thumb"><img src="images/thumbs/16.png"
@@ -150,12 +144,11 @@
 						it answers questions, finds features, writes annotation, or reviews the files content.
 					</p>
 					<p>
-						The program has to be
-						activated on the chat owner PC. It builds a 'llama-index' model, which processes the user query
+						The backend Python code has to be
+						running on the chat owner PC. It builds a 'llama-index' model, which processes the user query
 						and sends the prompt to OpenAI API. At last, the program returns AI response to this chatbot.
-						You should ask @vladishat to grant you access.
+						Access to the chat may be granted by the chat owner.
 					</p>
-
 				</article>
 
 				<article class="col-6 col-12-xsmall work-item" id="a1">
@@ -164,7 +157,7 @@
 					<h3><a href="https://skipper.shinyapps.io/shiny_market_prices_forecast/" target="_blank">Stock
 							Market Prices
 							Forecast</a></h3>
-					<p>This is R-Shiny application that predicts stock price trends in upcoming days of Daily Stock
+					<p>This is R-Shiny Web-application that predicts stock price trends in upcoming days of Daily Stock
 						Trading.
 						The code uses 'Quantmod' R-package for getting price history and Facebook 'Prophet'
 						package for the prediction.</p>
@@ -183,22 +176,24 @@
 					<h3><a href="https://skipper.shinyapps.io/shiny_warehouse_dashboard/" target="_blank">Market Basket
 							Analysis</a>
 					</h3>
-					<p>This Warehouse Dashboard application implements Market Basket Analysis to reveal correlations and
+					<p>This R-Shiny Warehouse Dashboard application implements Market Basket Analysis to reveal correlations and
 						clustering
 						of different product sales. It uses 'arules' package for getting rules and 'flexdashboard'
 						package for R-Shiny.</p>
 				</article>
+
 				<article class="col-6 col-12-xsmall work-item" id="a4">
 					<a href="images/fulls/04.jpg" class="image fit thumb"><img src="images/thumbs/04.jpg"
 							alt="Twitter Sentiment Analysis" /></a>
 					<h3><a href="https://skipper.shinyapps.io/shiny_twiter_sentiments/" target="_blank">Twitter
 							Sentiment Analysis</a></h3>
-					<p>This project uses Natural Language Processing to explore the sentiment
+					<p>This R-Shiny project. It uses Natural Language Processing to explore the sentiment
 						polarity and averaged emotion distribution through the tweets which contains the pointed
 						keywords. Text network analysis shows prominent clusters of words which concern the subject.
 						With Emotion Rate of tweets the most joyful and most fearful tweets can be extracted.
 					</p>
 				</article>
+
 				<article class="col-6 col-12-xsmall work-item" id="a5">
 					<a href="images/fulls/05.jpg" class="image fit thumb"><img src="images/thumbs/05.jpg"
 							alt="Credit Risk Estimation" /></a>
@@ -213,12 +208,14 @@
 						the train subset and applying it to the test one, the performances (confusion matrices)
 						calculations and summarizing the prediction ability of the models.</p>
 				</article>
+
 				<article class="col-6 col-12-xsmall work-item" id="a6">
 					<a href="images/fulls/06.jpg" class="image fit thumb"><img src="images/thumbs/06.jpg"
 							alt="COVID-19 UVGI" /></a>
 					<h3><a href="https://covid-19-clean.org/calculator-journal-report/" target="_blank">COVID-19 UVGI
 							Scientific Calculator </a></h3>
-					<p>This is Ultraviolet Germicidal Irradiation (UVGI) scientific calculator Web-application, that has
+					<p>This is R-Shiny Web-application, Ultraviolet Germicidal Irradiation (UVGI) scientific calculator
+						that has
 						been used to facilitate the engineering and design of an air-purifying equipment, being
 						developed for use in hospitals, commercial and residential applications during COVID-19
 						pandemic. It calculates the <a href="https://arxiv.org/abs/2006.02205" target="_blank">degree of
@@ -226,11 +223,12 @@
 						account the processed room air volume and the virus survive parameters.
 					</p>
 				</article>
+
 				<article class="col-6 col-12-xsmall work-item" id="a7">
 					<a href="images/fulls/07.jpg" class="image fit thumb"><img src="images/thumbs/07.jpg"
 							alt="Sales Forecast" /></a>
 					<h3><a href="https://skipper.shinyapps.io/sales_forecast/" target="_blank">Sales Forecast</a></h3>
-					<p>This application
+					<p>This R-Shiny Web-application
 						reads and summaries the history of sales, trains a predictive model, and makes a forecast for
 						the chosen number of days. The source of the data is a net of shops storing the sales history in
 						SQLite database.
@@ -239,16 +237,18 @@
 						series that have strong seasonal effects and several seasons of historical data. Prophet is
 						robust to missing data and shifts in the trend, and typically handles outliers well.</p>
 				</article>
+
 				<article class="col-6 col-12-xsmall work-item" id="a8">
 					<a href="images/fulls/08.jpg" class="image fit thumb"><img src="images/thumbs/08.jpg"
 							alt="Bids and Asks" /></a>
 					<h3><a href="https://skipper.shinyapps.io/shiny_asset_assess/" target="_blank">Bids and Asks
 							Optimization in
 							High-Frequency Trading</a></h3>
-					<p>This application fetches and analysis Binance-exchange trades history for a set of symbols, and
+					<p>This R-Shiny Web-application fetches and analysis Binance-exchange trades history for a set of symbols, and
 						then estimates HFT profitability by analyzing Bids and Asks frequencies and optimizing P&L.
 					</p>
 				</article>
+
 				<article class="col-6 col-12-xsmall work-item" id="a9">
 					<a href="images/fulls/09.jpg" class="image fit thumb"><img src="images/thumbs/09.jpg"
 							alt="Solar Plant Dynamics" /></a>
@@ -266,7 +266,8 @@
 						on the charts.
 					</p>
 				</article>
-				<article class="col-6 col-12-xsmall work-item" id="a10">
+
+				<!-- <article class="col-6 col-12-xsmall work-item" id="a10">
 					<a href="images/fulls/10.jpg" class="image fit thumb"><img src="images/thumbs/10.jpg"
 							alt="Newton Fractals" /></a>
 					<h3><a href="#" target="_blank">Newton Fractals in
@@ -277,7 +278,8 @@
 						close vicinity of different roots plotted down by different colors forms
 						<a href="https://en.wikipedia.org/wiki/Newton_fractal" target="_blank">Newton Fractals</a>.
 					</p>
-				</article>
+				</article> -->
+
 				<article class="col-6 col-12-xsmall work-item" id="a11">
 					<a href="images/fulls/11.jpg" class="image fit thumb"><img src="images/thumbs/11.jpg" alt="Matlab Fast Fourier
 						Transform and Wavelet Analysis" /></a>
@@ -285,15 +287,33 @@
 							Transform and Wavelet Analysis of Bubble Induced Luminescence</a></h3>
 					<p>
 						<a href="https://link.springer.com/article/10.1134/S0006350912040161" target="_blank">Bubbles
-							induced
-							fluctuations of some properties of aqueous solutions</a> were proposed as an origin of
-						observed phenomena of water luminescence under Infra-Red radiation.
-						Mathematical model of the air diffusion through water to
-						surface were built and coded in Matlab. The numerical solution shows oscillations of the
-						dissolved air concentration. Fast Fourier Transform and Wavelet Analysis shown that bubbles
-						self-oscillations have a form of fractal with an infinite sequence of periods, which evolve in
-						time and that is qualitatively consistent with the experiment.
+							induced fluctuations of some properties of aqueous solutions</a> were proposed as an origin
+							of observed phenomena of water luminescence under Infra-Red radiation.
+							Mathematical model of the air diffusion through water to
+							surface were built and coded in Matlab. The numerical solution shows oscillations of the
+							dissolved air concentration. Fast Fourier Transform and Wavelet Analysis shown that bubbles
+							self-oscillations have a form of fractal with an infinite sequence of periods, which evolve in
+							time and that is qualitatively consistent with the experiment.
 						</a>.
+					</p>
+				</article>
+				<article class="col-6 col-12-xsmall work-item" id="a10">
+					<a href="images/fulls/10.png" class="image fit thumb"><img src="images/thumbs/10.png"
+							alt="Cryptocurrency Trading History Analyzer" /></a>
+					<h3><a href="#" target="_blank">Cryptocurrency Trading History Analyzer</a></h3>
+					<p>This is Jupiter Notebook that sets connection to <a href="https://www.binance.com/en" target="_blank">
+							Binance-exchange API</a> and retrieves a list of historical trades for a given set of
+						symbols.
+						The parameters passed to the function are the symbol, the maximum number of trades to
+						be retrieved and the ID of the trade from which to start retrieving. The function reads the high
+						frequency trade history hour by hour and combines the rows into one dataframe for further
+						statistical analysis.
+					</p>
+					<p>
+						As it is shown on the picture, the program analysis the price and cash flow oscillations, and
+						Bids
+						and Asks distributions around the dynamically changing midprice. Then, it finds the optimal
+						values of the next Bid and Ask which would optimize P&L.
 					</p>
 				</article>
 				<article class="col-6 col-12-xsmall work-item" id="a12">
