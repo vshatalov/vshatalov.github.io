@@ -128,24 +128,37 @@
 						function of the income in that year plus the bequest if the investor dies in that year.</p>
 				</article>
 
-				<!-- <article class="col-6 col-12-xsmall work-item" id="a19">
+				<article class="col-6 col-12-xsmall work-item" id="a19">
 					<a href="images/fulls/19.png" class="image fit thumb"><img src="images/thumbs/19.png" alt="" /></a>
 					<h3><a href="https://colab.research.google.com/drive/1g16w5LgTsfgpKqDq8Of2NgrzLKy35vpW?usp=sharing"
-							target="_blank">Footprint Optimization Problem</a></h3>
-					<p>This Jupiter Notebook starts with a spreadsheet which has two columns: post codes in the US and
-						demand quantities representing demand consumed in each post code. Then, it assigns each demand
-						post code to a stocking location post code, generates a table that shows how much demand is
-						covered by X number of stocking locations
-						(essentially aggregating the demand coverage and summarizing). It applications outputs the list
-						of these ZIP code centers.
-					<p>ZIP code locations were taken <a
+							target="_blank">Optimal locations of logistic centers by postcode clustering</a></h3>
+					<p>This Jupiter Notebook Objective is to optimize the number and locations of warehouses (or stores)
+						to provide the best coverage of customer demand spread over a country.
+
+						The only parameter of the clustering is the maximal delivery distance (120 miles in the
+						example).
+					<p>For the case of USA, ZIP code locations were taken <a
 							href="https://www.google.com/url?q=https%3A%2F%2Fsimplemaps.com%2Fdata%2Fus-zips"
 							target="_blank">here</a> and were limited by the <a
 							href="https://www.google.com/url?q=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FContiguous_United_States"
 							target="_blank">contiguous United States</a>.</p>
-					<p>Thus, 90 ZIP centers cover 99% of Demand inside 120 miles neighborhood.</p>
+					<p>Performance vs Number of Clusters were investigated. In the range of 10 to 130 clusters the
+						demand coverage grows from 47.7 to 99.6%. So, 90 ZIP centers cover 99% of Demand inside 120
+						miles neighborhood.</p>
 					</p>
-				</article> -->
+				</article>
+
+				<article class="col-6 col-12-xsmall work-item" id="a22">
+					<a href="images/fulls/22.png" class="image fit thumb"><img src="images/thumbs/22.png" alt="" /></a>
+					<h3><a href="https://colab.research.google.com/drive/18caGHCTrj5P2gOT8HH7QEjAFgzAS55eD?usp=sharing"
+							target="_blank">Likert-type scale Survey Analysis</a></h3>
+					<p>
+						This Jupiter Notebook calculates Cronbach's alpha as a measure of internal consistency of survey groups, and
+						correlations between responder groups. Mapping the answers to the binary scale it gets confusion matrices for every pair of the
+						subscales and estimate predictive abilities. For the sake of deeper analysis, this code splits the responses into several groups by similarity of
+						answers and curry out the upper analysis inside every of the clusters.
+					</p>
+				</article>
 
 
 				<article class="col-6 col-12-xsmall work-item" id="a21">
