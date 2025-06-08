@@ -233,16 +233,29 @@
 
 				<article class="col-6 col-12-xsmall work-item" id="a23">
 					<a href="images/fulls/23.png" class="image fit thumb"><img src="images/thumbs/23.png"
-							alt="Game Theory Prisoner's Dilemma Simulation." /></a>
-					<h3><a href="https://colab.research.google.com/drive/1xZdFKV1Wv3OZADG184-HQzIS8SOan_7t?usp=sharing"
-							target="_blank">Game Theory Prisoner's Dilemma Simulation</a></h3>
-					<p>This Jupiter Notebook simulates a tournament of random repetition number of pair games like the
-						prisoner's dilemma in the theory of games. It is a competition of different known cooperation
-						strategies.</p>
-					<p> It runs 6 specific Strategies: AlwaysCooperate, AlwaysDefect, TitForTat, GrimTrigger, Random
-						Strategy, and Pavlov "wins stay, lose switch". </p>
-					<p>The output shows the head-to-head results for each pair of strategies and then the final overall
-						ranking of the strategies based on their accumulated scores.</p>
+							alt="Iterated Prisoner's Dilemma Evolutionary Game Theory Simulation" /></a>
+					<h3><a href="https://colab.research.google.com/drive/1fvlXXg5LhqVFvr4nYaX_QAS8SQX2fU1i?usp=sharing"
+							target="_blank">Iterated Prisoner's Dilemma Evolutionary Game Theory Simulation</a></h3>
+					<p>This is a simulation aiming for determine the best strategy to survive in the
+						Iterated Prisoner's Dilemma (IPD) evolutionary game.
+
+						For example, we want to test 5 strategies. So, we set the strategy populations of 5 group by say
+						200 players that is 1000 players in total. Then, we run a loop over a number of generations
+						(say,
+						800). In every generation we calculate a mean value of Utility as weighted sum of a player's
+						health, power, and reputation getting in (say, 100) pair games of IPD. In every round of IPD the
+						payer with the given strategy gets a random partner from another strategy groups and gets points
+						according to the moves of these two players from Payoff Matrix.
+
+						Then, we calculate the fitness of every strategy as a mean value of Utility of all players with
+						the given strategy. The fitness is a measure of how well a strategy performs in the game.
+						This process is following the Evolutionary Game Theory and aimed to observe the population
+						dynamics.
+					</p>
+					<p> The plot shows how different strategies rise and fall. Strategies that are
+						"more successful" (higher fitness) will see their lines go up, while less successful ones will
+						go down.
+					</p>
 
 				</article>
 
