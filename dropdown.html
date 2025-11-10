@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Collapsible TOC Example</title>
+	<!-- <script src="toc.js" defer></script> -->
+</head>
+
+<body>
+
+	<!-- Your content and TOC go here -->
+	<!-- TOC Button and Container -->
+	<button id="toggleToc">Show Table of Contents</button>
+	<nav id="tocList" style="display: none;">
+		<ul></ul>
+	</nav>
+
+	<!-- Main Content Section -->
+	<section id="mainContent">
+		<h2>Introduction</h2>
+		<p>Welcome to the guide...</p>
+
+		<h3>Overview</h3>
+		<p>This section covers the basics...</p>
+
+		<h3>Details</h3>
+		<p>Here are the details...</p>
+
+		<h2>Conclusion</h2>
+		<p>Final thoughts...</p>
+	</section>
+	<!-- <script>
+    // Your JavaScript code here
+
+
+	
+  </script> -->
+	<script>
+		const section = document.getElementById('mainContent');
+		const tocList = document.querySelector('#tocList ul');
+		const toggleBtn = document.getElementById('toggleToc');
+		const tocContainer = document.getElementById('tocList');
+
+		// Build TOC from headings
+		const headings = section.querySelectorAll('h2, h3');
+		headings.forEach((heading, index) => {
+			if (!heading.id) heading.id = `heading-${index}`;
+			const li = document.createElement('li');
+			const a = document.createElement('a');
+			a.href = `#${heading.id}`;
+			a.textContent = heading.textContent;
+			li.appendChild(a);
+			tocList.appendChild(li);
+		});
+
+		// Toggle visibility
+		toggleBtn.addEventListener('click', () => {
+			const isVisible = tocContainer.style.display === 'block';
+			tocContainer.style.display = isVisible ? 'none' : 'block';
+			toggleBtn.textContent = isVisible ? 'Show Table of Contents' : 'Hide Table of Contents';
+		});
+	</script>
+</body>
+
+</html>
