@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRPPD Solver - Demo Ready</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --success: #27ae60;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        #layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        #sidebar {
+            width: 400px;
+            background: var(--light);
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        #map-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        button.secondary {
+            background: var(--success);
+        }
+
+        /* --- RESULTS TABLE STYLING --- */
+        .results-container {
+            font-size: 0.85rem;
+        }
+
+        .vehicle-card {
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-left: 5px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .vehicle-header {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--primary);
+        }
+
+        .route-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+        .route-table th {
+            text-align: left;
+            border-bottom: 2px solid #eee;
+            font-size: 0.75rem;
+            color: #7f8c8d;
+        }
+
+        .route-table td {
+            border-bottom: 1px solid #eee;
+            padding: 4px 0;
+            vertical-align: top;
+        }
+
+        .grand-total {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .total-stat {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Map Labels */
+        .map-label {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #7f8c8d;
+            border-radius: 3px;
+            padding: 1px 3px;
+            font-family: sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        /* Status Log */
+        .status-log {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #555;
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>VRPPD Solver</h1>
+        <div id="api-status">🔴 API Key Needed</div>
+    </header>
+
+    <div id="layout">
+        <div id="sidebar">
+
+            <div class="control-group">
+                <h3>1. Data Input</h3>
+                <p style="font-size:0.8rem; color:#666; margin-bottom:10px;">Start here. Click "Load Demo Data" to
+                    auto-connect with a preset key.</p>
+                <button onclick="activateDemoMode()">Load Demo Data (Auto-Connect)</button>
+
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+
+                <label>Or Upload Custom JSON</label>
+                <input type="file" id="fileInput" accept=".json">
+            </div>
+
+            <div class="control-group">
+                <h3>2. Configuration</h3>
+                <label>Google Maps API Key</label>
+                <input type="password" id="apiKey" placeholder="Enter API Key">
+                <button onclick="loadScript()">Connect API Manually</button>
+
+                <label>Service Time (min per stop)</label>
+                <input type="number" id="serviceTime" value="15">
+                <label>Max Vehicle Duration (Hours)</label>
+                <input type="number" id="maxDuration" value="40">
+            </div>
+
+            <div class="control-group">
+                <h3>3. Operations</h3>
+                <button id="solveBtn" onclick="runSolver()" disabled>Solve & View Itinerary</button>
+                <button id="downloadBtn" class="secondary" onclick="downloadCSV()" disabled>Download CSV</button>
+            </div>
+
+            <div id="resultsArea" class="results-container"></div>
+
+            <div class="status-log" id="log">System Ready...</div>
+        </div>
+
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- GLOBAL VARIABLES ---
+        let map;
+        let geocoder;
+        let distanceMatrixService;
+        let locations = [];
+        let vehicles = [];
+        let pairs = [];
+        let solution = null;
+        let mapObjects = { markers: [], lines: [] };
+
+        // Matrices now hold two datasets
+        let globalMatrices = { times: [], distances: [] };
+
+        const routeColors = ['#e74c3c', '#8e44ad', '#3498db', '#e67e22', '#2ecc71', '#f1c40f'];
+
+        // The requested Key
+        const DEMO_KEY = "AIzaSyAjN5yYURwsOCc6c0sJw4Ev-fPqvpQ6tzQ";
+
+        function log(msg) {
+            const el = document.getElementById('log');
+            el.innerHTML = `<div>> ${msg}</div>` + el.innerHTML;
+        }
+
+        // --- 1. DEMO LOADER (New Function) ---
+        function activateDemoMode() {
+            log("Activating Demo Mode...");
+
+            // 1. Fill API Key
+            document.getElementById('apiKey').value = DEMO_KEY;
+
+            // 2. Load Data
+            locations = [
+                { id: 0, name: "Depot (NYC)", address: "New York, NY", demand: 0, window: [8, 18], lat: 40.7128, lng: -74.0060 },
+                { id: 1, name: "Pickup A (Jersey City)", address: "Jersey City, NJ", demand: 10, window: [9, 12], lat: 40.7178, lng: -74.0431 },
+                { id: 2, name: "Delivery A (Newark)", address: "Newark, NJ", demand: -10, window: [10, 14], lat: 40.7357, lng: -74.1724 },
+                { id: 3, name: "Pickup B (Queens)", address: "Queens, NY", demand: 5, window: [9, 11], lat: 40.7282, lng: -73.7949 },
+                { id: 4, name: "Delivery B (Brooklyn)", address: "Brooklyn, NY", demand: -5, window: [13, 17], lat: 40.6782, lng: -73.9442 }
+            ];
+
+            
+
+            vehicles = [{ id: 1, capacity: 20 }, { id: 2, capacity: 20 }];
+            pairs = [[1, 2], [3, 4]];
+
+            log("Demo Data loaded into memory.");
+
+            // 3. Trigger API Load immediately
+            loadScript();
+        }
+
+        // --- 2. GOOGLE MAPS LOADER ---
+        function loadScript() {
+            const key = document.getElementById('apiKey').value;
+            if (!key) return alert("Please enter an API Key");
+
+            log("Connecting to Google Maps API...");
+
+            (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
+                key: key, v: "weekly",
+            });
+
+            initMap();
+        }
+
+        async function initMap() {
+            try {
+                const { Map } = await google.maps.importLibrary("maps");
+                const { Geocoder } = await google.maps.importLibrary("geocoding");
+                await google.maps.importLibrary("geometry");
+
+                document.getElementById('api-status').innerText = "🟢 API Connected";
+                document.getElementById('api-status').style.color = "#2ecc71";
+                document.getElementById('solveBtn').disabled = false;
+
+                map = new Map(document.getElementById("map"), {
+                    zoom: 11,
+                    center: { lat: 40.7128, lng: -74.0060 },
+                    mapId: "DEMO_MAP_ID",
+                    styles: [{ "featureType": "poi", "stylers": [{ "visibility": "off" }] }]
+                });
+
+                geocoder = new Geocoder();
+                distanceMatrixService = new google.maps.DistanceMatrixService();
+                log("Map initialized.");
+
+                // If Demo Data was loaded before map, center map now
+                if (locations.length > 0 && locations[0].lat) {
+                    map.setCenter({ lat: locations[0].lat, lng: locations[0].lng });
+                    log("Map centered on Demo Data.");
+                }
+
+            } catch (e) { log("Error initializing map: " + e.message); }
+        }
+
+        // --- 3. DATA PROCESSING ---
+
+        document.getElementById('fileInput').addEventListener('change', function (e) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    locations = data.locations;
+                    vehicles = data.vehicles;
+                    pairs = data.pairs;
+                    log("Custom data file loaded.");
+                    if (map) clearMap();
+                } catch (err) { log("Error parsing JSON."); }
+            };
+            reader.readAsText(e.target.files[0]);
+        });
+
+        async function geocodeLocations() {
+            const needsGeocoding = locations.some(l => !l.lat);
+            if (!needsGeocoding) return;
+
+            log("Geocoding locations...");
+            const promises = locations.map((loc, index) => {
+                return new Promise((resolve) => {
+                    if (loc.lat && loc.lng) return resolve(loc);
+                    geocoder.geocode({ 'address': loc.address }, function (results, status) {
+                        if (status === 'OK') {
+                            locations[index].lat = results[0].geometry.location.lat();
+                            locations[index].lng = results[0].geometry.location.lng();
+                        } else {
+                            locations[index].lat = 40.7128; locations[index].lng = -74.0060; // Fallback
+                        }
+                        resolve(locations[index]);
+                    });
+                });
+            });
+            await Promise.all(promises);
+        }
+
+        // --- 4. MATRIX & SOLVER ---
+        async function getMatrixData() {
+            log("Fetching Traffic & Distance Data...");
+            const origins = locations.map(l => ({ lat: l.lat, lng: l.lng }));
+
+            return new Promise((resolve, reject) => {
+                distanceMatrixService.getDistanceMatrix({
+                    origins: origins,
+                    destinations: origins,
+                    travelMode: 'DRIVING',
+                }, (response, status) => {
+                    if (status === 'OK') {
+                        const times = response.rows.map(row =>
+                            row.elements.map(el => el.duration ? el.duration.value / 60 : 9999)
+                        );
+                        const dists = response.rows.map(row =>
+                            row.elements.map(el => el.distance ? el.distance.value / 1000 : 9999)
+                        );
+                        resolve({ times: times, distances: dists });
+                    } else {
+                        log("Matrix API Failed: " + status);
+                        reject(status);
+                    }
+                });
+            });
+        }
+
+        async function runSolver() {
+            if (!map) return alert("Wait for Map to connect...");
+            clearMap();
+            document.getElementById('resultsArea').innerHTML = "<p>Calculating...</p>";
+
+            await geocodeLocations();
+
+            try {
+                globalMatrices = await getMatrixData();
+            } catch (e) {
+                log("API Error. Check Console.");
+                return;
+            }
+
+            const distMatrix = globalMatrices.times;
+            const serviceTime = parseFloat(document.getElementById('serviceTime').value);
+            const maxWeeklyMin = parseFloat(document.getElementById('maxDuration').value) * 60;
+
+            let routes = vehicles.map(v => ({
+                vehicleId: v.id, capacity: v.capacity, stops: [0],
+                totalDuration: 0
+            }));
+
+            let unassigned = [...pairs];
+
+            function isValid(routeStops, newLoad) {
+                let time = locations[0].window[0] * 60;
+                let currentLoad = 0;
+                let totalTravel = 0;
+
+                for (let i = 0; i < routeStops.length; i++) {
+                    const stopIdx = routeStops[i];
+                    const loc = locations[stopIdx];
+
+                    currentLoad += loc.demand;
+                    if (currentLoad > newLoad.maxCap) return false;
+
+                    if (i > 0) {
+                        const prevIdx = routeStops[i - 1];
+                        const travel = distMatrix[prevIdx][stopIdx];
+                        totalTravel += travel;
+                        time += travel;
+                    }
+
+                    const winStart = loc.window[0] * 60;
+                    const winEnd = loc.window[1] * 60;
+
+                    if (time < winStart) time = winStart;
+                    if (time > winEnd) return false;
+
+                    time += serviceTime;
+                }
+                const lastStop = routeStops[routeStops.length - 1];
+                totalTravel += distMatrix[lastStop][0];
+
+                if (totalTravel > maxWeeklyMin) return false;
+                return { totalDist: totalTravel };
+            }
+
+            // Greedy Insertion Heuristic
+            routes.forEach(route => {
+                let changed = true;
+                while (changed && unassigned.length > 0) {
+                    changed = false;
+                    for (let pIdx = 0; pIdx < unassigned.length; pIdx++) {
+                        const pair = unassigned[pIdx];
+                        let bestConfig = null;
+
+                        for (let i = 1; i <= route.stops.length; i++) {
+                            for (let j = i + 1; j <= route.stops.length + 1; j++) {
+                                let trialStops = [...route.stops];
+                                trialStops.splice(i, 0, pair[0]);
+                                trialStops.splice(j, 0, pair[1]);
+
+                                const validRes = isValid(trialStops, { maxCap: route.capacity });
+                                if (validRes) {
+                                    if (!bestConfig || validRes.totalDist < bestConfig.totalDist) {
+                                        bestConfig = { stops: trialStops, dist: validRes.totalDist, pairIndex: pIdx };
+                                    }
+                                }
+                            }
+                        }
+                        if (bestConfig) {
+                            route.stops = bestConfig.stops;
+                            unassigned.splice(pIdx, 1);
+                            changed = true;
+                            break;
+                        }
+                    }
+                }
+                route.stops.push(0);
+            });
+
+            solution = routes;
+            log(`Solved. ${unassigned.length} unassigned.`);
+
+            plotRoutesOnMap(routes);
+            printDetailedSolution(routes);
+            document.getElementById('downloadBtn').disabled = false;
+        }
+
+        // --- 5. OUTPUT & VISUALIZATION ---
+
+        function minutesToTime(m) {
+            const hours = Math.floor(m / 60);
+            const mins = Math.floor(m % 60);
+            return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+        }
+
+        function printDetailedSolution(routes) {
+            const resultsDiv = document.getElementById('resultsArea');
+            const serviceTime = parseFloat(document.getElementById('serviceTime').value);
+            let html = "";
+            let fleetTotalDist = 0;
+            let fleetTotalTime = 0;
+
+            routes.forEach((r, vIndex) => {
+                if (r.stops.length <= 2) return;
+                const color = routeColors[vIndex % routeColors.length];
+                let routeHtml = `<div class="vehicle-card" style="border-left-color: ${color}">`;
+                routeHtml += `<div class="vehicle-header"><span>Vehicle ${r.vehicleId}</span></div>`;
+                routeHtml += `<table class="route-table">
+                <thead><tr><th>Seq</th><th>Stop</th><th>Arr / Dep</th><th>Dist</th></tr></thead><tbody>`;
+
+                let currentTime = locations[0].window[0] * 60;
+                let currentRouteDist = 0;
+
+                r.stops.forEach((stopIdx, i) => {
+                    const loc = locations[stopIdx];
+                    let travelTime = 0;
+                    let travelDist = 0;
+
+                    if (i > 0) {
+                        const prevIdx = r.stops[i - 1];
+                        travelTime = globalMatrices.times[prevIdx][stopIdx];
+                        travelDist = globalMatrices.distances[prevIdx][stopIdx];
+                        currentTime += travelTime;
+                        currentRouteDist += travelDist;
+                    }
+                    const winStart = loc.window[0] * 60;
+                    if (currentTime < winStart) currentTime = winStart;
+
+                    const effectiveService = (i === 0) ? 0 : serviceTime;
+                    const arrivalStr = minutesToTime(currentTime);
+                    const departureStr = minutesToTime(currentTime + effectiveService);
+
+                    routeHtml += `<tr>
+                    <td>${i}</td>
+                    <td>${loc.name}</td>
+                    <td>${arrivalStr} - ${departureStr}</td>
+                    <td>${currentRouteDist.toFixed(1)} km</td>
+                </tr>`;
+                    currentTime += effectiveService;
+                });
+
+                const routeTotalDuration = (currentTime - (locations[0].window[0] * 60)) / 60;
+                routeHtml += `</tbody></table>`;
+                routeHtml += `<div style="margin-top:8px; font-weight:bold; font-size:0.8rem; text-align:right">
+                            Totals: ${currentRouteDist.toFixed(1)} km | ${routeTotalDuration.toFixed(1)} hrs
+                          </div></div>`;
+                html += routeHtml;
+                fleetTotalDist += currentRouteDist;
+                fleetTotalTime += routeTotalDuration;
+            });
+
+            html += `<div class="grand-total">
+                    <div>Grand Total Distance</div>
+                    <div class="total-stat">${fleetTotalDist.toFixed(1)} km</div>
+                    <div style="margin-top:5px">Total Fleet Time: ${fleetTotalTime.toFixed(1)} hrs</div>
+                 </div>`;
+            resultsDiv.innerHTML = html;
+        }
+
+        function clearMap() {
+            mapObjects.markers.forEach(m => m.setMap(null));
+            mapObjects.lines.forEach(l => l.setMap(null));
+            mapObjects = { markers: [], lines: [] };
+        }
+
+        function plotRoutesOnMap(routes) {
+            routes.forEach((route, vIndex) => {
+                if (route.stops.length <= 2) return;
+                const pathCoords = route.stops.map(idx => ({ lat: locations[idx].lat, lng: locations[idx].lng }));
+                const color = routeColors[vIndex % routeColors.length];
+
+                const flightPath = new google.maps.Polyline({
+                    path: pathCoords, geodesic: true, strokeColor: color, strokeOpacity: 0.8, strokeWeight: 5
+                });
+                flightPath.setMap(map);
+                mapObjects.lines.push(flightPath);
+
+                route.stops.forEach((stopIdx, i) => {
+                    const loc = locations[stopIdx];
+                    if (stopIdx === 0 && vIndex > 0) return;
+                    const seq = (i === 0 || i === route.stops.length - 1) ? "Depot" : i;
+
+                    const marker = new google.maps.Marker({
+                        position: { lat: loc.lat, lng: loc.lng },
+                        map: map,
+                        title: loc.name,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 7,
+                            fillColor: stopIdx === 0 ? '#333' : color,
+                            fillOpacity: 1, strokeWeight: 2, strokeColor: "white",
+                            labelOrigin: new google.maps.Point(0, 3)
+                        },
+                        label: { text: `${seq}. ${loc.name}`, color: "black", className: 'map-label' }
+                    });
+                    mapObjects.markers.push(marker);
+                });
+            });
+        }
+
+        function downloadCSV() {
+            if (!solution) return;
+            let csv = "VehicleID,StopSequence,LocationName,Lat,Lng\n";
+            solution.forEach(route => {
+                route.stops.forEach((stopIdx, seq) => {
+                    const loc = locations[stopIdx];
+                    csv += `${route.vehicleId},${seq},"${loc.name}",${loc.lat},${loc.lng}\n`;
+                });
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "vrp_routes.csv";
+            link.click();
+        }
+    </script>
+</body>
+
+</html>
