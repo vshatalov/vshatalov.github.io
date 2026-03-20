@@ -200,8 +200,22 @@
 <body>
 
     <header>
-        <h1>VRPPD Solver</h1>
-        <div id="api-status">🔴 API Key Needed</div>
+        <div>
+            <h1>VRPPD Solver</h1>
+            <p><a href="https://vshatalov.github.io/"><em>Help</em></a></p>
+        </div>
+
+        <div>
+            <h2 style="font-size:0.8rem; color:#bdc3c7; margin:0;">Vehicle Routing Problem with Pickup and Delivery,
+                Capacity and Time Window Constraints</h2>
+            <p style="font-size:0.7rem; color:#95a5a6; margin:0;">This application solves a complex logistical problem
+                called the Vehicle Routing Problem with Pickup and Delivery (VRPPD) using Google's OR-Tools library. It
+                finds the most efficient routes for a fleet of vehicles to pick up items and deliver them to specific
+                locations, while also respecting constraints like vehicle capacity and time windows.
+
+            </p>
+        </div>
+        <div id="api-status">🔴 Google Maps API Key Needed</div>
     </header>
 
     <div id="layout">
@@ -287,7 +301,7 @@
                 { id: 4, name: "Delivery B (Brooklyn)", address: "Brooklyn, NY", demand: -5, window: [13, 17], lat: 40.6782, lng: -73.9442 }
             ];
 
-            
+
 
             vehicles = [{ id: 1, capacity: 20 }, { id: 2, capacity: 20 }];
             pairs = [[1, 2], [3, 4]];
