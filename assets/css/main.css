@@ -2640,8 +2640,13 @@ input, select, textarea {
 
 		#header .image.avatar {
 			margin: 0 0 1em 0;
-			width: 15.25em;
-		}
+			width: 11.25em;
+
+			border-radius: 50%;   /* Makes the image perfectly round */
+			object-fit: cover;    /* Ensures the image doesn't stretch */
+			border: 2px solid #ccc; /* Adds an optional border */
+
+	}
 
 /* Footer */
 
